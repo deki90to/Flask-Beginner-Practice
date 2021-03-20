@@ -92,3 +92,15 @@ def update(id):
 			return 'There was a problem with updating name'
 	else:
 		return render_template('update.html', update_friend=update_friend)
+
+
+@app.route('/delete/<int:id>')
+def delete(id):
+	delete_friend = Friends.query.get_or_404(id)
+
+	try:
+		db.session.delete(delete_friend)
+		db.session.commit()
+		return redirect('/friends')
+	except:
+		return 'Problem with deleting'
